@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/photoAlbum"
+        android:layout_width="75dp"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="0.5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="0.5dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_music_player_default_cover" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_toEndOf="@id/photoAlbum" />
+
+    <TextView
+        android:id="@+id/nameOfTheSong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/divider"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@id/photoAlbum"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="New Text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/background_light"
+        android:textSize="17.5sp" />
+
+    <TextView
+        android:id="@+id/artistName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@id/photoAlbum"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="New Text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/background_light"
+        android:textSize="12.5sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@id/photoAlbum"
+        android:background="@color/white_glass50" />
+</RelativeLayout>

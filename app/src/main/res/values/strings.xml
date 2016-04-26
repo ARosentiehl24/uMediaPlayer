@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">uMediaPlayer</string>
+    <string name="video">Video</string>
+    <string name="music">Music</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="play">Play</string>
+    <string name="initial_time">0:00</string>
+</resources>
