@@ -1,10 +1,7 @@
 package com.arrg.android.app.umediaplayer;
 
 
-import android.app.ActivityManager;
-import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
@@ -12,13 +9,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.annotation.BinderThread;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSeekBar;
-import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,8 +23,6 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -40,17 +32,16 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.arrg.android.app.umediaplayer.Constants.AUDIO_TO_PLAY_EXTRA;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MusicPlayerFragment extends Fragment {
 
-    private static final int UPDATE_FREQUENCY = 500;
+    private static final int UPDATE_FREQUENCY = 1000;
     private static final int STEP = 5000;
 
+    private Boolean isMovingSeekBar = false;
     private Boolean isStarted = false;
     private Handler handler;
     private Integer index = 0;
@@ -61,15 +52,6 @@ public class MusicPlayerFragment extends Fragment {
         @Override
         public void run() {
             updatePosition();
-            if (mediaPlayer.isPlaying()) {
-                int position = mediaPlayer.getCurrentPosition();
-                int duration = mediaPlayer.getDuration();
-
-                progress.setMax(duration);
-                progress.setProgress(position);
-
-                handler.postDelayed(this, 100);
-            }
         }
     };
 
@@ -101,6 +83,19 @@ public class MusicPlayerFragment extends Fragment {
                 }
                 break;
             case R.id.bPlay:
+                if (mediaPlayer.isPlaying()) {
+                    pausePlay();
+                } else {
+                    if (isStarted) {
+                        mediaPlayer.start();
+
+                        bPlay.setImageResource(R.drawable.ic_pause);
+
+                        updatePosition();
+                    } else {
+                        playSong(musicAdapter.getSong(index), index);
+                    }
+                }
                 break;
             case R.id.bNext:
                 if (index < musicAdapter.getItemCount() - 1) {
@@ -150,17 +145,26 @@ public class MusicPlayerFragment extends Fragment {
         progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mediaPlayer.seekTo(progress);
+                if (isMovingSeekBar) {
+                    mediaPlayer.seekTo(progress);
+
+                    long time = mediaPlayer.getCurrentPosition();
+
+                    long second = (time / 1000) % 60;
+                    long minute = (time / (1000 * 60)) % 60;
+
+                    tvInitialTime.setText(String.format(Locale.US, "%02d:%02d", minute, second));
+                }
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                isMovingSeekBar = true;
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                isMovingSeekBar = false;
             }
         });
 
@@ -323,18 +327,22 @@ public class MusicPlayerFragment extends Fragment {
 
     public void playNextTrack() {
         stopPlay();
+
+        if (index < musicAdapter.getItemCount() - 1) {
+            int index = this.index + 1;
+
+            playSong(musicAdapter.getSong(index), index);
+        }
     }
 
     public void pausePlay() {
         mediaPlayer.pause();
 
-        bPlay.setImageResource(android.R.drawable.ic_media_play);
+        bPlay.setImageResource(R.drawable.ic_play_arrow);
 
         handler.removeCallbacks(runnable);
 
         progress.setProgress(mediaPlayer.getCurrentPosition());
-
-        isStarted = false;
     }
 
     private void stopPlay() {
@@ -354,22 +362,16 @@ public class MusicPlayerFragment extends Fragment {
     public void updatePosition() {
         handler.removeCallbacks(runnable);
 
+        long time = mediaPlayer.getCurrentPosition();
+
+        long second = (time / 1000) % 60;
+        long minute = (time / (1000 * 60)) % 60;
+
+        tvInitialTime.setText(String.format(Locale.US, "%02d:%02d", minute, second));
+
         progress.setProgress(mediaPlayer.getCurrentPosition());
 
         handler.postDelayed(runnable, UPDATE_FREQUENCY);
-    }
-
-    public void startProgress(MediaPlayer mediaPlayer) {
-        this.mediaPlayer = mediaPlayer;
-
-        int position = mediaPlayer.getCurrentPosition();
-        int duration = mediaPlayer.getDuration();
-
-        progress.setMax(duration);
-        progress.setProgress(position);
-
-        handler.removeCallbacks(runnable);
-        handler.postDelayed(runnable, 100);
     }
 }
 
