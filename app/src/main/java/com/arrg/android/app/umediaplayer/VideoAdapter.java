@@ -1,6 +1,7 @@
 package com.arrg.android.app.umediaplayer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -82,7 +83,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
         @Override
         public void onClick(View v) {
+            Video video = videos.get(getLayoutPosition());
 
+            Intent intent = new Intent(activity, VideoPlayerActivity.class);
+            intent.putExtra(Constants.VIDEO_TO_PLAY_EXTRA, video);
+            activity.startActivity(intent);
+            activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
     }
 }

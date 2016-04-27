@@ -2,7 +2,9 @@ package com.arrg.android.app.umediaplayer;
 
 import android.graphics.Bitmap;
 
-public class Video {
+import java.io.Serializable;
+
+public class Video implements Serializable {
 
     private Boolean isPlaying;
     private Bitmap photoAlbum;
