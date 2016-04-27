@@ -109,7 +109,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
                 MainActivity musicPlayerActivity = (MainActivity) activity;
 
                 musicPlayerActivity.updateAlbumView(music);
-                musicPlayerActivity.playSong(music);
+                musicPlayerActivity.playSong(music, getLayoutPosition());
 
                 MusicPlayerFragment musicPlayerFragment = (MusicPlayerFragment) Util.getInstance(activity, MusicPlayerFragment.class);
                 musicPlayerFragment.updateViews(music);

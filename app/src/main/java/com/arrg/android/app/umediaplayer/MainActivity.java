@@ -1,9 +1,13 @@
 package com.arrg.android.app.umediaplayer;
 
+import android.app.ActivityManager;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import static com.arrg.android.app.umediaplayer.Constants.AUDIO_TO_PLAY_EXTRA;
 
 import com.nvanbenschoten.motion.ParallaxImageView;
 
@@ -12,6 +16,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static MainActivity mainActivity;
 
     @Bind(R.id.parallaxImageView)
     ParallaxImageView parallaxImageView;
@@ -46,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        mainActivity = this;
+
         parallaxImageView.registerSensorManager();
 
         Util.setImmersiveMode(this);
@@ -70,7 +78,8 @@ public class MainActivity extends AppCompatActivity {
         parallaxImageView.setImageBitmap(BlurEffectUtil.blur(this, music.getPhotoAlbum()));
     }
 
-    public void playSong(Music music) {
-
+    public void playSong(Music music, int layoutPosition) {
+        MusicPlayerFragment musicPlayerFragment = (MusicPlayerFragment) Util.getInstance(this, MusicPlayerFragment.class);
+        musicPlayerFragment.playSong(music, layoutPosition);
     }
 }
