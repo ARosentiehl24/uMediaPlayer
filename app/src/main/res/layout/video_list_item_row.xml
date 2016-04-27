@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2.5dp"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:padding="0.5dp">
+
+    <ImageView
+        android:id="@+id/videoPreview"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2.5dp"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/videoName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="New Text"
+            android:textColor="@color/primary_text_default_dark" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/videoDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/videoName"
+            android:text="@string/initial_video_time"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/secondary_text_dark"
+            android:textSize="12.5sp" />
+    </RelativeLayout>
+</LinearLayout>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +21,13 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter {
+public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> implements FastScrollRecyclerView.SectionedAdapter {
 
-    private Activity activity;
+    private AppCompatActivity activity;
     private ArrayList<Music> musics;
     private Music music;
 
-    public SongAdapter(Activity activity, ArrayList<Music> musics) {
+    public MusicAdapter(AppCompatActivity activity, ArrayList<Music> musics) {
         this.activity = activity;
         this.musics = musics;
     }
@@ -68,8 +69,8 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
         return musics.get(index);
     }
 
-    public void isPlaying(int layoutPosition, boolean b) {
-        musics.get(layoutPosition).setPlaying(b);
+    public void isPlaying(int layoutPosition, boolean isPlaying) {
+        musics.get(layoutPosition).setPlaying(isPlaying);
 
         notifyItemChanged(layoutPosition);
     }
@@ -106,8 +107,12 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
                 Toast.makeText(activity, "The bitmap is null.", Toast.LENGTH_SHORT).show();
             } else {
                 MainActivity musicPlayerActivity = (MainActivity) activity;
-                //musicPlayerActivity.updateAlbumView(music.getPhotoAlbum(), music.getArtistName(), music.getNameOfTheSong());
-                //musicPlayerActivity.playSong(music.getPathOfFile(), getLayoutPosition());
+
+                musicPlayerActivity.updateAlbumView(music);
+                musicPlayerActivity.playSong(music);
+
+                MusicPlayerFragment musicPlayerFragment = (MusicPlayerFragment) Util.getInstance(activity, MusicPlayerFragment.class);
+                musicPlayerFragment.updateViews(music);
             }
         }
     }

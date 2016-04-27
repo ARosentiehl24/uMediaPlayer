@@ -2,7 +2,7 @@ package com.arrg.android.app.umediaplayer;
 
 import android.graphics.Bitmap;
 
-public class Music {
+public class Video {
 
     private Boolean isPlaying;
     private Bitmap photoAlbum;
@@ -12,12 +12,7 @@ public class Music {
     private String displayName;
     private Integer duration;
 
-    public Music(String pathOfFile) {
-        this.pathOfFile = pathOfFile;
-        this.isPlaying = false;
-    }
-
-    public Music() {
+    public Video() {
         this.isPlaying = false;
     }
 

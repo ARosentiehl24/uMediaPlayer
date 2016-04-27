@@ -43,9 +43,9 @@ public class Util {
 
         if (addToBackStack) {
             transaction.addToBackStack(fragmentLaunch.getName());
-            transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
+            //transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
         } else {
-            transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            //transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         }
 
         transaction.replace(container, fragment, fragmentLaunch.getName());

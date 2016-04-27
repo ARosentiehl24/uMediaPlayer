@@ -7,12 +7,13 @@
     tools:context="com.arrg.android.app.umediaplayer.MainActivity">
 
     <com.nvanbenschoten.motion.ParallaxImageView
+        android:id="@+id/parallaxImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        app:motionIntensity="1"
+        app:motionIntensity="1.0"
         app:motionScaledIntensity="true"
-        app:motionTiltSensitivity="1" />
+        app:motionTiltSensitivity="1.0" />
 
     <View
         android:layout_width="match_parent"

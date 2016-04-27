@@ -30,38 +30,15 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         Util.setImmersiveMode(this);
 
-        Ask.on(this)
-                .forPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .when(new Ask.Permission() {
-                    @Override
-                    public void granted(List<String> permissions) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                new FadeOutAnimation(progressBar).setDuration(1000).animate();
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                                finish();
-                            }
-                        }, 2500);
-                    }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                new FadeOutAnimation(progressBar).setDuration(1000).animate();
 
-                    @Override
-                    public void denied(List<String> permissions) {
-                        boolean isAllPermissionGranted = true;
-
-                        for (String permission : permissions) {
-                            if (ContextCompat.checkSelfPermission(getApplicationContext(), permission) != PackageManager.PERMISSION_DENIED) {
-                                isAllPermissionGranted = false;
-                                break;
-                            }
-                        }
-
-                        if (!isAllPermissionGranted) {
-                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                            finish();
-                        }
-                    }
-                }).go();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
+            }
+        }, 2500);
     }
 }
