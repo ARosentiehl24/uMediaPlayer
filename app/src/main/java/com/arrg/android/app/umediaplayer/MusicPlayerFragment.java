@@ -323,6 +323,7 @@ public class MusicPlayerFragment extends Fragment {
         Music musicAdapterSong = musicAdapter.getSong(index);
 
         updateAlbumView(musicAdapterSong);
+        updateViews(musicAdapterSong);
     }
 
     public void playNextTrack() {
